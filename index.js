@@ -1,5 +1,5 @@
 'use strict';
-
+process.env.PAGE_ACCESS_TOKEN = "***REMOVED***"
 // Imports dependencies and set up http server
 const
   express = require('express'),
@@ -62,7 +62,22 @@ app.get('/webhook', (req, res) => {
     }
   });
 
+app.get('/',function(req,res) {
+    res.send("HI I am a chatbot")
+})
+
 /*
+
+//CUrl messages
+
+https://calm-coast-92557.herokuapp.com/  <- HEROKU URL
+
+curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d "{""object"": ""page"", ""entry"": [{""messaging"": [{""message"": ""TEST_MESSAGE""}]}]}"
+curl -H "Content-Type: application/json" -X POST "https://calm-coast-92557.herokuapp.com/webhook" -d "{""object"": ""page"", ""entry"": [{""messaging"": [{""message"": ""TEST_MESSAGE""}]}]}"
+
+curl -X GET "localhost:1337/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
+curl -X GET "https://calm-coast-92557.herokuapp.com/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
+
 
 'use strict'
 
@@ -80,9 +95,6 @@ app.use(bodyParser.json())
 
 //ROUTES
 
-app.get('/',function(req,res) {
-    res.send("HI I am a chatbot")
-})
 
 // facebook security thing
 app.get('/webhook/',function(req,res){
