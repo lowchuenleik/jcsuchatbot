@@ -3,11 +3,12 @@ process.env.PAGE_ACCESS_TOKEN = "***REMOVED***"
 
 // Imports dependencies and set up http server
 const
-  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
   express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()); // creates express http server
-  const request = require('request');
+
+const request = require('request');
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
