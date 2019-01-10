@@ -100,7 +100,6 @@ function callSendAPI(sender_psid, response) {
     }
   }); 
 }
-  }
 
 
 // Sets server port and logs message on success
