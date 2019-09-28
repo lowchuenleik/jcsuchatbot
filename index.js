@@ -1,6 +1,7 @@
 'use strict';
 process.env.PAGE_ACCESS_TOKEN = "***REMOVED***"
-import handleMessage from "./handleMessage"
+
+var handler = require('./handleMessage');
 
 // Imports dependencies and set up http server
 const
@@ -25,32 +26,7 @@ function handlePostback(sender_psid, received_postback) {
     response = { "text": "Oops, try sending another image." }
   }
   // Send the message to acknowledge the postback
-  callSendAPI(sender_psid, response);
-}
-
-// Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-    // Construct the message body
-    let request_body = {
-      "recipient": {
-        "id": sender_psid
-      },
-      "message": response
-    }
-
-    // Send the HTTP request to the Messenger Platform
-  request({
-    "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": { "access_token": PAGE_ACCESS_TOKEN },
-    "method": "POST",
-    "json": request_body
-  }, (err, res, body) => {
-    if (!err) {
-      console.log('message sent!')
-    } else {
-      console.error("Unable to send message:" + err);
-    }
-  }); 
+  handler.callSendAPI(sender_psid, response);
 }
 
 
@@ -80,7 +56,7 @@ app.post('/webhook', (req, res) => {
         // Check if the event is a message or postback and
         // pass the event to the appropriate handler function
         if (webhook_event.message) {
-            handleMessage(sender_psid, webhook_event.message);        
+            handler.handleMessage(sender_psid, webhook_event.message);        
         } else if (webhook_event.postback) {
             handlePostback(sender_psid, webhook_event.postback);
         }
