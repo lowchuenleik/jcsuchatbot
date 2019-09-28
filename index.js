@@ -1,6 +1,8 @@
 'use strict';
 process.env.PAGE_ACCESS_TOKEN = "***REMOVED***"
 
+process.env.VERIFY_TOKEN = "***REMOVED***"
+
 // Imports dependencies and set up http server
 const
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
@@ -9,6 +11,11 @@ const
   app = express().use(bodyParser.json()); // creates express http server
 
 const request = require('request');
+
+
+function firstEntity(nlp, name) {
+  return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+}
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
@@ -30,9 +37,9 @@ function handleMessage(sender_psid, received_message) {
 
   let response;
 
-  const greeting = firstEntity(message.nlp, 'meal');
+  const meal = firstEntity(message.nlp, 'meal');
 
-  console.log("OMG LOOK HERE for GREETING",)
+  console.log("OMG LOOK HERE for GREETING",meal)
   response = {
   "text": `You sent the message: "${received_message.text}". Now send me an image! - Chuen`
   }
@@ -163,7 +170,6 @@ app.post('/webhook', (req, res) => {
 app.get('/webhook', (req, res) => {
 
     // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = "***REMOVED***"
       
     // Parse the query params
     let mode = req.query['hub.mode'];
@@ -174,7 +180,7 @@ app.get('/webhook', (req, res) => {
     if (mode && token) {
     
       // Checks the mode and token sent is correct
-      if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+      if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
         
         // Responds with the challenge token from the request
         console.log('WEBHOOK_VERIFIED');
@@ -201,7 +207,7 @@ curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d '{"
 curl -H "Content-Type: application/json" -X POST "https://jcsuchatbot.herokuapp.com/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "TEST_MESSAGE"}]}]}'
 
 curl -X GET "localhost:1337/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
-curl -X GET "https://calm-coast-92557.herokuapp.com/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
+curl -X GET "https://jcsuchatbot.herokuapp.com/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
 
 
 'use strict'
