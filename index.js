@@ -37,7 +37,7 @@ function handleMessage(sender_psid, received_message) {
 
   let response;
 
-  const meal = firstEntity(message.nlp, 'meal');
+  const meal = firstEntity(received_message.nlp, 'meal');
 
   console.log("OMG LOOK HERE for GREETING",meal)
   response = {
