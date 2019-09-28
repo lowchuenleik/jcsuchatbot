@@ -1,8 +1,6 @@
 'use strict';
 process.env.PAGE_ACCESS_TOKEN = "***REMOVED***"
 
-var handler = require('./handleMessage');
-
 // Imports dependencies and set up http server
 const
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
@@ -199,8 +197,8 @@ app.get('/',function(req,res) {
 
 https://calm-coast-92557.herokuapp.com/  <- HEROKU URL
 
-curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d "{""object"": ""page"", ""entry"": [{""messaging"": [{""message"": ""TEST_MESSAGE""}]}]}"
-curl -H "Content-Type: application/json" -X POST "https://calm-c oast-92557.herokuapp.com/webhook" -d "{""object"": ""page"", ""entry"": [{""messaging"": [{""message"": ""TEST_MESSAGE""}]}]}"
+curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "TEST_MESSAGE"}]}]}'
+curl -H "Content-Type: application/json" -X POST "https://jcsuchatbot.herokuapp.com/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "TEST_MESSAGE"}]}]}'
 
 curl -X GET "localhost:1337/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
 curl -X GET "https://calm-coast-92557.herokuapp.com/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
