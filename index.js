@@ -14,7 +14,7 @@ const request = require('request');
 
 
 function firstEntity(nlp, name) {
-  return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+  return nlp && nlp.entities && nlp.entities.intent && nlp.entities.intent[0];
 }
 
 // Handles messaging_postbacks events
@@ -38,13 +38,21 @@ function handleMessage(sender_psid, received_message) {
 
   let response;
   console.log("Look here for NLP",received_message.nlp.entities);
-  
+
   const meal = firstEntity(received_message.nlp, 'meal');
 
-  console.log("OMG LOOK HERE for GREETING",meal)
-  response = {
-  "text": `You sent the message: "${received_message.text}". Now send me an image! - Chuen`
+  console.log("OMG LOOK HERE for firstEntity OUTPUT",meal)
+
+  if (received_message.nlp.intent[0].value === 'meal'){
+    response = {
+      "text": `You sent the message: "${received_message.text}". Now send me an image! - Chuen`
+      }
+  } else{
+    response = {
+      "text": "Unfortunately I can't process this message right now"
+    }
   }
+  
   // check greeting is here and is confident
   // if (greeting && greeting.confidence > 0.8) {
   // // } else { 
