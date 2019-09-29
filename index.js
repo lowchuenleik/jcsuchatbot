@@ -58,11 +58,10 @@ function handleMessage(sender_psid, received_message) {
         }
     } else if(nlp.value === 'meal'){
       response = {
-        "text": `In response to"${received_message.text}". \n ${responses.meal}`,
         "attachment": {
           "type": "image",
           "payload": {
-            "attachment_id": "711364085956528"
+            "attachment_id": 711364085956528
           }
         }
       }
@@ -152,10 +151,11 @@ function callSendAPI(sender_psid, response) {
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {
+        console.log("in data here",res,body);
         if (!err) {
-        console.log('message sent!')
+          console.log('message sent!')
         } else {
-        console.error("Unable to send message:" + err);
+          console.error("Unable to send message:" + err);
         }
     }); 
 }
@@ -262,7 +262,7 @@ curl -X POST -H "Content-Type: application/json" -d '{
       }
     }
   }
-}' "https://graph.facebook.com/me/messages?access_token=***REMOVED***"  
+}' "https://graph.facebook.com/v2.6/me/messages?access_token=***REMOVED***"  
 
 
 https://calm-coast-92557.herokuapp.com/  <- HEROKU URL
