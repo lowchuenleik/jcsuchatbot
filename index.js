@@ -49,7 +49,7 @@ function handleMessage(sender_psid, received_message) {
 
   const nlp = firstEntity(received_message.nlp, 'meal');
 
-  console.log("OMG LOOK HERE for firstEntity OUTPUT",meal)
+  console.log("OMG LOOK HERE for firstEntity OUTPUT",nlp)
 
   if (nlp.value === 'medical'){
     response = {
@@ -232,8 +232,8 @@ app.get('/',function(req,res) {
 
 https://calm-coast-92557.herokuapp.com/  <- HEROKU URL
 
-curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "TEST_MESSAGE"}]}]}'
-curl -H "Content-Type: application/json" -X POST "https://jcsuchatbot.herokuapp.com/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "TEST_MESSAGE"}]}]}'
+curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "When is dinner","sender":{"id":'1'}}]}]}'
+curl -H "Content-Type: application/json" -X POST "https://jcsuchatbot.herokuapp.com/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "When is dinner","sender":{"id":'1'}}]}]}'
 
 curl -X GET "localhost:1337/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
 curl -X GET "https://jcsuchatbot.herokuapp.com/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
