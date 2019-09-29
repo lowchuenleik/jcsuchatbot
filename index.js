@@ -47,15 +47,15 @@ function handleMessage(sender_psid, received_message) {
   let response;
   console.log("Look here for NLP",received_message.nlp.entities);
 
-  const meal = firstEntity(received_message.nlp, 'meal');
+  const nlp = firstEntity(received_message.nlp, 'meal');
 
   console.log("OMG LOOK HERE for firstEntity OUTPUT",meal)
 
-  if (received_message.nlp.intent[0].value === 'medical'){
+  if (nlp.value === 'medical'){
     response = {
       "text": `In response to"${received_message.text}". \n ${responses.medical}`
       }
-  } else if(received_message.nlp.intent[0].value === 'meal'){
+  } else if(nlp.value === 'meal'){
     response = {
       "text": `In response to"${received_message.text}". \n ${responses.meal}`,
       "attachment":{
