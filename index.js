@@ -33,10 +33,12 @@ function handlePostback(sender_psid, received_postback) {
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
 }
+
 function handleMessage(sender_psid, received_message) {
 
   let response;
-
+  console.log("Look here for NLP",received_message.nlp.entities);
+  
   const meal = firstEntity(received_message.nlp, 'meal');
 
   console.log("OMG LOOK HERE for GREETING",meal)
