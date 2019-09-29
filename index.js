@@ -45,32 +45,40 @@ function handlePostback(sender_psid, received_postback) {
 function handleMessage(sender_psid, received_message) {
 
   let response;
-  console.log("Look here for NLP",received_message.nlp.entities);
 
   const nlp = firstEntity(received_message.nlp, 'meal');
 
   console.log("OMG LOOK HERE for firstEntity OUTPUT",nlp)
+  
+  try{
 
-  if (nlp.value === 'medical'){
-    response = {
-      "text": `In response to"${received_message.text}". \n ${responses.medical}`
+    if (nlp.value === 'medical'){
+      response = {
+        "text": `In response to"${received_message.text}". \n ${responses.medical}`
+        }
+    } else if(nlp.value === 'meal'){
+      response = {
+        "text": `In response to"${received_message.text}". \n ${responses.meal}`,
+        "attachment":{
+        "type":"image", 
+        "payload":{
+          "url":"/meal.png", 
+          "is_reusable":true
+        }
       }
-  } else if(nlp.value === 'meal'){
-    response = {
-      "text": `In response to"${received_message.text}". \n ${responses.meal}`,
-      "attachment":{
-      "type":"image", 
-      "payload":{
-        "url":"/meal.png", 
-        "is_reusable":true
+        }
+    } else{
+      response = {
+        "text": "Unfortunately I can't process this message right now"
       }
     }
-      }
-  } else{
+  } catch (e){
+    console.log("ERROR LOLS",e);
     response = {
-      "text": "Unfortunately I can't process this message right now"
+      "text": "Error encountered"
     }
   }
+
   
   // check greeting is here and is confident
   // if (greeting && greeting.confidence > 0.8) {
