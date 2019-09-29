@@ -154,7 +154,6 @@ function callSendAPI(sender_psid, response) {
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {
-        console.log("in data here",res,body);
         if (!err) {
           console.log('message sent!')
         } else {
