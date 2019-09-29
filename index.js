@@ -4,14 +4,22 @@ process.env.PAGE_ACCESS_TOKEN = "***REMOVED***"
 process.env.VERIFY_TOKEN = "***REMOVED***"
 
 // Imports dependencies and set up http server
-const
-  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
-  express = require('express'),
-  bodyParser = require('body-parser'),
-  app = express().use(bodyParser.json()); // creates express http server
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express().use(bodyParser.json()); // creates express http server
+
+app.use(express.static(__dirname + '/img/'));
 
 const request = require('request');
 
+const responses = {
+  medical:"For any medical-related queries you can contact our college nurse at college-nurse@jesus.cam.ac.uk and book an appointment there! Her hours vary and can be found posted outside her door in Library Court I. If you are seeking urgent medical help or advice, please visit your GP as soon as possible",
+  compsci:"The shortened name for Computer Science or a Computer Scientist",
+  classlist:"Each year, the results from all exams are published in class lists. As of last year, you are now able to opt-out of having your results made public.",
+  asnac:"An acronym for 🤔Anglo-Saxon, Norse and Celtic – a Cambridge course",
+  meal:"See attached for the meal timetables!"
+}
 
 function firstEntity(nlp, name) {
   return nlp && nlp.entities && nlp.entities.intent && nlp.entities.intent[0];
@@ -43,9 +51,20 @@ function handleMessage(sender_psid, received_message) {
 
   console.log("OMG LOOK HERE for firstEntity OUTPUT",meal)
 
-  if (received_message.nlp.intent[0].value === 'meal'){
+  if (received_message.nlp.intent[0].value === 'medical'){
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image! - Chuen`
+      "text": `In response to"${received_message.text}". \n ${responses.medical}`
+      }
+  } else if(received_message.nlp.intent[0].value === 'meal'){
+    response = {
+      "text": `In response to"${received_message.text}". \n ${responses.meal}`,
+      "attachment":{
+      "type":"image", 
+      "payload":{
+        "url":"/meal.png", 
+        "is_reusable":true
+      }
+    }
       }
   } else{
     response = {
