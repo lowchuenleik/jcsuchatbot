@@ -51,8 +51,11 @@ function handleMessage(sender_psid, received_message) {
   console.log("OMG LOOK HERE for firstEntity OUTPUT",nlp)
   
   try{
-
-    if (nlp.value === 'medical'){
+    if (received_message.text === 'Get started'){
+      response = {
+        "text": `Welcome!`
+      }
+    } else if (nlp.value === 'medical'){
       response = {
         "text": `In response to"${received_message.text}". \n ${responses.medical}`
         }
