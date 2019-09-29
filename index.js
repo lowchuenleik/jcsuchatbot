@@ -59,11 +59,11 @@ function handleMessage(sender_psid, received_message) {
     } else if(nlp.value === 'meal'){
       response = {
         "text": `In response to"${received_message.text}". \n ${responses.meal}`,
-        "attachment":{
-        "type":"image", 
-        "payload":{
-          "url":"/meal.png", 
-          "is_reusable":true
+        "attachment": {
+          "type": "image",
+          "payload": {
+            "attachment_id": "711364085956528"
+          }
         }
       }
         }
@@ -238,6 +238,34 @@ app.get('/',function(req,res) {
 
 //CUrl messages
 
+curl -X POST -H "Content-Type: application/json" -d '{
+  "message":{
+    "attachment":{
+      "type":"image", 
+      "payload":{
+        "url":"http://jcsuchatbot.herokuapp.com/meal.png", 
+        "is_reusable":true,
+      }
+    }
+  }
+}' "https://graph.facebook.com/v2.6/me/message_attachments?access_token=***REMOVED***"
+
+
+curl -X POST -H "Content-Type: application/json" -d '{
+  "recipient": {
+    "id": "2625552627485477"
+  },
+  "message": {
+    "attachment": {
+      "type": "image",
+      "payload": {
+        "attachment_id": "711364085956528"
+      }
+    }
+  }
+}' "https://graph.facebook.com/me/messages?access_token=***REMOVED***"  
+
+
 https://calm-coast-92557.herokuapp.com/  <- HEROKU URL
 
 curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "When is dinner","sender":{"id":'1'}}]}]}'
@@ -245,6 +273,10 @@ curl -H "Content-Type: application/json" -X POST "https://jcsuchatbot.herokuapp.
 
 curl -X GET "localhost:1337/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
 curl -X GET "https://jcsuchatbot.herokuapp.com/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
+
+
+2625552627485477 -- your id
+
 
 
 'use strict'
