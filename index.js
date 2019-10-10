@@ -18,7 +18,8 @@ const responses = {
   compsci:"The shortened name for Computer Science or a Computer Scientist",
   classlist:"Each year, the results from all exams are published in class lists. As of last year, you are now able to opt-out of having your results made public.",
   asnac:"An acronym for 🤔Anglo-Saxon, Norse and Celtic – a Cambridge course",
-  meal:"See attached for the meal timetables!"
+  meal:"See attached for the meal timetables!",
+  contact:"Please visit https://www.jesus.cam.ac.uk/college/people/staff-and-departments for contact details!"
 }
 
 function firstEntity(nlp, name) {
@@ -55,22 +56,36 @@ function handleMessage(sender_psid, received_message) {
       response = {
         "text": `Welcome!`
       }
-    } else if (nlp.value === 'medical'){
-      response = {
-        "text": `In response to"${received_message.text}". \n ${responses.medical}`
-        }
-    } else if(nlp.value === 'meal'){
-      response = {
-        "attachment": {
-          "type": "image",
-          "payload": {
-            "attachment_id": 711364085956528
+    } else {
+      switch (nlp.value){
+        case 'medical': 
+          response = {
+            "text": `In response to"${received_message.text}". \n ${responses.medical}`
+          };
+          break;
+
+        case 'meal':
+          response = {
+            "attachment": {
+              "type": "image",
+              "payload": {
+                "attachment_id": 711364085956528
+              }
+            }
           }
-        }
-      }
-    } else{
-      response = {
-        "text": "Unfortunately I can't process this message right now"
+          break;
+        
+        case 'contact':
+          response = {
+            "text" : responses.contact
+          };
+          break;
+
+        default:
+          response = {
+            "text" : "Hm, not sure how to respond to that yet!"
+          };
+          break;
       }
     }
   } catch (e){
