@@ -91,7 +91,7 @@ function handleMessage(sender_psid, received_message) {
   } catch (e){
     console.log("ERROR LOLS",e);
     response = {
-      "text": "Error encountered"
+      "text" : "Hm, not sure how to respond to that yet!"
     }
   }
 
