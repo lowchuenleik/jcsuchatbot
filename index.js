@@ -34,37 +34,70 @@ function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  switch (payload){
-    case 'medical': 
-      response = {
-        "text": `In response to"${received_message.text}". \n ${responses.medical}`
-      };
-      break;
+  if (received_postback.title === 'Get Started'){
+    response = {
+      "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "elements": [{
+                  "title": "Welcome!",
+                  "subtitle": "What would you like to know about?",
+                  "buttons": [
+                    {
+                      "type": "postback",
+                      "title": "Caff times",
+                      "payload": "meal",
+                    },
+                    {
+                      "type": "postback",
+                      "title": "Contact info",
+                      "payload": "contact",
+                    },
+                    {
+                      "type": "postback",
+                      "title": "Medical info",
+                      "payload": "medical",
+                    }
+                  ],
+                }]
+              }
+            }
+          }
+  } else{
+    switch (payload){
+      case 'medical': 
+        response = {
+          "text": `In response to"${received_message.text}". \n ${responses.medical}`
+        };
+        break;
 
-    case 'meal':
-      response = {
-        "attachment": {
-          "type": "image",
-          "payload": {
-            "attachment_id": 711364085956528
+      case 'meal':
+        response = {
+          "attachment": {
+            "type": "image",
+            "payload": {
+              "attachment_id": 711364085956528
+            }
           }
         }
-      }
-      break;
-    
-    case 'contact':
-      response = {
-        "text" : responses.contact
-      };
-      break;
+        break;
+      
+      case 'contact':
+        response = {
+          "text" : responses.contact
+        };
+        break;
 
-    default:
-      response = {
-        "text" : "Hm, not sure how to respond to that yet!"
-      };
-      break;
+      default:
+        response = {
+          "text" : "Hm, not sure how to respond to that yet!"
+        };
+        break;
+    }
   }
-  
+
+
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
 }
