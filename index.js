@@ -1,7 +1,7 @@
 'use strict';
-process.env.PAGE_ACCESS_TOKEN = "***REMOVED***"
+process.env.PAGE_ACCESS_TOKEN = "EAAKosvs099IBADRANDy5tgDgKH0rOuBM6kZBj3tN6pZBnkohAoNx4zZAydOXpCevsAL4fh1voa2BeRZC5zqoI9Mn1K6AAkxNZAFhAfZB9LDRZBuDGhyL12gtTf3UrfvKDH1VJtMIcJG2V5BZAg4WyY7UZAHMZBDHOvOhHXchZCFtlVV3KI2ZCvF96J5u"
 
-process.env.VERIFY_TOKEN = "***REMOVED***"
+process.env.VERIFY_TOKEN = "chuenleiklow"
 
 // Imports dependencies and set up http server
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -349,12 +349,12 @@ curl -X POST -H "Content-Type: application/json" -d '{
       }
     }
   }
-}' "https://graph.facebook.com/v2.6/me/message_attachments?access_token=***REMOVED***"
+}' "https://graph.facebook.com/v2.6/me/message_attachments?access_token=EAAP4AoI4ICQBAClWW7jU77D3FrOQfEpbqihILd4b0ssPCoAEU0HxD86s3IrZCCmaxf2RksUVuG2bwATaiZC56QHFlG2cWTmyWsOQWHf1EP5wn3SFc26aq1F9r6D3KZATMPkUePZC4ozKnsmrIsarWrUpLBRMkUY47xdltFCDYQZDZD"
 
 
 curl -X POST -H "Content-Type: application/json" -d '{
   "recipient": {
-    "id": "2625552627485477"
+    "id": "3035456263193073"
   },
   "message": {
     "attachment": {
@@ -364,7 +364,7 @@ curl -X POST -H "Content-Type: application/json" -d '{
       }
     }
   }
-}' "https://graph.facebook.com/v2.6/me/messages?access_token=***REMOVED***"  
+}' "https://graph.facebook.com/v2.6/me/messages?access_token=EAAKosvs099IBALqYf54kZCbUFsVnwix9iajZB0xbsmJaBWQtQeLsZCPSZBzigpOYM4U7sEw0KwWYLRQGvoStiAzEfq9zfECL1x6GQ4LMvprj4QHZBlZCt6UDFzCseD5ZAZCsdqm4Db009KZBgRqJno5fkn2aRIIZCIkIELmc3bpvoFjOZAvdMeOk705"  
 
 
 https://calm-coast-92557.herokuapp.com/  <- HEROKU URL
@@ -372,12 +372,12 @@ https://calm-coast-92557.herokuapp.com/  <- HEROKU URL
 curl -H "Content-Type: application/json" -X POST "localhost:1337/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "When is dinner","sender":{"id":'1'}}]}]}'
 curl -H "Content-Type: application/json" -X POST "https://jcsuchatbot.herokuapp.com/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "When is dinner","sender":{"id":'1'}}]}]}'
 
-curl -X GET "localhost:1337/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
-curl -X GET "https://jcsuchatbot.herokuapp.com/webhook?hub.verify_token=***REMOVED***&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
+curl -X GET "localhost:1337/webhook?hub.verify_token=chuenleiklow&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
+curl -X GET "https://jcsuchatbot.herokuapp.com/webhook?hub.verify_token=chuenleiklow&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
 
 
 2625552627485477 -- your id
-
+'3035456263193073 - jakub
 
 
 'use strict'
@@ -399,7 +399,7 @@ app.use(bodyParser.json())
 
 // facebook security thing
 app.get('/webhook/',function(req,res){
-    if (req.query['hub.verify_token'] == "***REMOVED***"){
+    if (req.query['hub.verify_token'] == "chuenleiklow"){
         res.send(req.query['hub.challenge'])
     }
     res.send("Wrong token")
