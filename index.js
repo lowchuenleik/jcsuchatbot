@@ -34,11 +34,37 @@ function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  if (payload === 'yes') {
-    response = { "text": "Thanks!" }
-  } else if (payload === 'no') {
-    response = { "text": "Oops, try sending another image." }
+  switch (payload){
+    case 'medical': 
+      response = {
+        "text": `In response to"${received_message.text}". \n ${responses.medical}`
+      };
+      break;
+
+    case 'meal':
+      response = {
+        "attachment": {
+          "type": "image",
+          "payload": {
+            "attachment_id": 711364085956528
+          }
+        }
+      }
+      break;
+    
+    case 'contact':
+      response = {
+        "text" : responses.contact
+      };
+      break;
+
+    default:
+      response = {
+        "text" : "Hm, not sure how to respond to that yet!"
+      };
+      break;
   }
+  
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
 }
@@ -52,9 +78,35 @@ function handleMessage(sender_psid, received_message) {
   console.log("OMG LOOK HERE for firstEntity OUTPUT",nlp)
   
   try{
-    if (received_message.text === 'Get started'){
+    if (received_message.text === 'Get Started'){
       response = {
-        "text": `Welcome!`
+        "attachment": {
+                "type": "template",
+                "payload": {
+                  "template_type": "generic",
+                  "elements": [{
+                    "title": "Welcome!",
+                    "subtitle": "What would you like to know about?",
+                    "buttons": [
+                      {
+                        "type": "postback",
+                        "title": "Caff times",
+                        "payload": "meal",
+                      },
+                      {
+                        "type": "postback",
+                        "title": "Contact info",
+                        "payload": "contact",
+                      },
+                      {
+                        "type": "postback",
+                        "title": "Medical info",
+                        "payload": "medical",
+                      }
+                    ],
+                  }]
+                }
+              }
       }
     } else {
       switch (nlp.value){
